@@ -7,7 +7,9 @@ pragma solidity >=0.5.0 <0.6.0; // version pragma - a declaration of the version
 contract ZombieFactory {
 
     //Event declaration - Events are a way for your contract to communicate that something happened on the blockchain to your app front-end, which can be 'listening' for certain events and take action when they happen.
+    //Ignore for now come back after going through line 59
     event NewZombie(uint zombieId, string name, uint dna);
+    
 
     uint dnaDigits = 16;  // Variable declaration - state the datatype of variable before using it. (uint stands for unsigned integers)
     uint dnaModulus = 10 ** dnaDigits;  //Math is straightforward like any other language
@@ -35,8 +37,10 @@ contract ZombieFactory {
         // Adding stuff to structs. 
         // array.push() adds something to the end of the array, so the elements are in the order we added them.
         uint id = zombies.push(Zombie(_name, _dna));
+        
+        // Come back after going through line 10
         // firing event
-        emit NewZombie(id, _name, _dna)
+        emit NewZombie(id, _name, _dna);
        
     }
 
