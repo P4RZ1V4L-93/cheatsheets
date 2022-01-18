@@ -6,7 +6,8 @@ pragma solidity >=0.5.0 <0.6.0; // version pragma - a declaration of the version
 
 contract ZombieFactory {
 
-    
+    //Event declaration - Events are a way for your contract to communicate that something happened on the blockchain to your app front-end, which can be 'listening' for certain events and take action when they happen.
+    event NewZombie(uint zombieId, string name, uint dna);
 
     uint dnaDigits = 16;  // Variable declaration - state the datatype of variable before using it. (uint stands for unsigned integers)
     uint dnaModulus = 10 ** dnaDigits;  //Math is straightforward like any other language
@@ -33,11 +34,18 @@ contract ZombieFactory {
     function _createZombie(string memory _name, uint _dna) private {
         // Adding stuff to structs. 
         // array.push() adds something to the end of the array, so the elements are in the order we added them.
-        zombies.push(Zombie(_name, _dna));
+        uint id = zombies.push(Zombie(_name, _dna));
+        // firing event
+        emit NewZombie(id, _name, _dna)
        
     }
 
     function _generateRandomDna(string memory _str) private view returns (uint) {
+        /* Ethereum has the hash function keccak256 built in, which is a version of SHA3. A hash function basically maps an input into a random 256-bit hexadecimal number. A slight change in the input will cause a large change in the hash.
+        * The abi.encodePacked(...) returns (bytes): Performes packed encoding of the given arguments
+        * The syntax is: keccak256(abi.encodePacked(_str))
+        */
+        
         uint rand = uint(keccak256(abi.encodePacked(_str)));
         return rand % dnaModulus;
     }
